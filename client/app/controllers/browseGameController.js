@@ -3,8 +3,6 @@
 		.controller('BrowseGameController', BrowseGameController);
 
 	function BrowseGameController($scope, BrowseGames, Auth, $location) {
-
-		$scope.home = "djsaldjaskl";
 		$scope.games = [];
 		$scope.requestMessage = {comments: ''};
 

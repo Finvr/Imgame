@@ -32,5 +32,5 @@
   		getGames: getGames,
   		sendRequest: sendRequest
   	};
- 		};
+}
 })();

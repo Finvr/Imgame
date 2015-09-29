@@ -6,11 +6,9 @@
 	<!-- google map -->
  	<div id="map" class="col s6">
  	</div>
-
  	<!-- game input form -->
  	<div class="half-div col s6">
 		<form novalidate class="create-form" name="createForm">
-
 			<!-- location form -->
 			<div class ="row">
 			 	<div class= "input-field col s12">
@@ -19,7 +17,6 @@
 					<p ng-show="createForm.location.$error.required && createForm.location.$dirty" class="help-block">Location is required.</p>
 				</div>
 			</div>
-
 			<!-- game name and # of players form -->
 			<div class = "row">
 				<div class= "input-field col s7">
@@ -27,16 +24,13 @@
 					<label class="active" for="game-name">* Game name</label>
 					<p ng-show="createForm.name.$error.required && createForm.name.$dirty" class="help-block">Name is required.</p>
 				</div>
-
 				<!-- # of players form -->
 				<div class="input-field col s5">
 					<input name="playerNum" type="number" id="num-players" ng-model="game.numPlayers" class="validate" min="2" max="20" placeholder="" required/>
 					<label class="active" for="num-players" data-error="2 - 20">* # of players</label>
 					<p ng-show="createForm.playerNum.$error.required && createForm.playerNum.$dirty" class="help-block">This is required.</p>
 				</div>
-
 			</div>
-
 			<!-- datetime form -->
 			<div class="row">
 				<div class="input-field col s12">
@@ -45,7 +39,6 @@
 					<p ng-show="createForm.datetime.$error.required && createForm.datetime.$dirty" class="help-block">Datetime is required.</p>
 				</div>
 			</div>
-
 			<!-- game description form -->
 			<div class="row">
 				<div class="input-field col s12">
@@ -53,7 +46,6 @@
 					<label class="active" for="game-description">Description</label>
 				</div>
 			</div>
-
 			<!-- create game button -->
 			<div class="row">
 				<div class="input-field col s12">

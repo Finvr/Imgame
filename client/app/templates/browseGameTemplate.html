@@ -8,22 +8,23 @@
       </form>
     </div>
     
-	  <ul class="collapsible popout" data-collapsible="accordion" watch>
-	    <li ng-repeat="game in games | filter:searchText">
-	      <div class="collapsible-header"><i class="material-icons right">speaker_notes</i><i class="material-icons right">event</i><h5><b>{{game.game}}</b></h5>
+	  <ul class="collection" watch>
+	    <li ng-repeat="game in games | filter:searchText" class="collection-item">
+	      <div class="collapsible-item"><i class="material-icons right">speaker_notes</i><i class="material-icons right">event</i><h5><b>{{game.game}}</b></h5>
 	      {{game.game_datetime | date:"EEEE, MMM d, y ',' h:mma"}}
 	       @ {{game.game_location}}
-	      </div>
-
-	      <div class="collapsible-body" ng-if="loggedIn">
-	      	<div class = "row">
-	      		<div class= "col s12"><i> {{game.gamepost_description}} </i> </div>
-	      	</div>
-
-  	      <div class = "container">	
+	       <div class="col">
+    				<a class='btn' href='#openRequest' modal>View Details</a>
+				</div>
+<!-- Modal Structure -->
+<div id="openRequest" class="modal">
+    <div class="modal-content">
+        <h4>{{game.game}}</h4>
+        <p>{{game.gamepost_description}}</p>
+        <div class = "container">	
     	     	<div class = "row center">
     	        <div class="input-field">
-    	          <textarea class ="col s9 offset-s1 materialize-textarea" ng-model="requestMessage.comments" placeholder="Enter Message"></textarea>
+    	          <textarea class ="col s9 offset-s1 materialize-textarea" ng-model="requestMessage.comments" placeholder="Contact Host"></textarea>
     	        </div>
   	          <div class = "col s2" ng-click="sendRequest(game)">
   	            <div class = "btn-floating btn-med waves-effect waves-light cyan">
@@ -33,8 +34,11 @@
             </div>
           </div>
         </div>
+    </div>
+</div>
+	      </div>
+
 
 	    </li>
     </ul>
   </div>
-</div>
