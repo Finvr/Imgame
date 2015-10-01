@@ -30,7 +30,8 @@
         templateUrl: 'app/templates/homeTemplate.html',
         url: '/',
         controller: 'HomeController',
-        resolve: {function (Auth) {
+        resolve: {
+          signout:function (Auth) {
           Auth.signout();
         }}
       })
