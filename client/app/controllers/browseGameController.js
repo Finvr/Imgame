@@ -125,23 +125,130 @@
 			var end= (document.getElementById('time2').value)
 			var endMS= (Number(end.slice(0,2)) * 3600000) + (Number(end.slice(3,5)) * 6000)
 			//12am - 12pm
-			if(Number(time.toString().slice(11,13)) < 18 &&
-				 Number(time.toString().slice(11,13)) > 6 ){
-				  //calculate time in milliseconds that has passed for the day
-				  var startTime= Number(time.toString().slice(11,13))*3600000+ Number(time.toString().slice(14,16))* 6000 - 21600000
+			if(Number(time.toString().slice(11,13))==0){
+				//time is 6pm
+				startTime = 64800000 + Number(time.toString().slice(14,16))* 6000
 			}
 
-		  //time is between 12 and 6pm
-			if(Number(time.toString().slice(11,13)) >= 18){
-			     //calculate time in milliseconds that has passed for the day
-			     var startTime= Number(time.toString().slice(11,13))*3600000+ Number(time.toString().slice(14,16))* 6000 - 21600000
-			}
-			//time is between 6pm and 12pm
-			if(Number(time.toString().slice(11,13)) <= 6){
-			     //calculate time in milliseconds that has passed for the day
-			     var startTime= Number(time.toString().slice(11,13))*3600000+ Number(time.toString().slice(14,16))* 6000 + 43200000
+			else if(Number(time.toString().slice(11,13))==1){
+				//time is 7pm
+				startTime = 68400000 + Number(time.toString().slice(14,16))* 6000
 			}
 
+			else if(Number(time.toString().slice(11,13))==2){
+				//time is 8pm
+				startTime = 72000000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==3){
+				//time is 9pm
+				startTime = 75600000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==4){
+				//time is 10pm
+				startTime = 79200000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==5){
+				//time is 11pm
+				startTime = 82800000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==6){
+				//time is 12am
+				startTime = Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==7){
+				//time is 1am
+				startTime = 3600000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==8){
+				//time is 2am
+				startTime = 7200000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==9){
+				//time is 3am
+				startTime = 10800000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==10){
+				//time is 4am
+				startTime = 14400000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==11){
+				//time is 5am
+				startTime = 18000000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==12){
+				//time is 6am
+				startTime = 21600000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==13){
+				//time is 7am
+				startTime = 25200000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==14){
+				//time is 8am
+				startTime = 28800000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==15){
+				//time is 9am
+				startTime = 32400000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==16){
+				//time is 10am
+				startTime = 36000000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==17){
+				//time is 11am
+				startTime = 39600000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==18){
+				//time is 12pm
+				startTime = 43200000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==19){
+				//time is 1pm
+				startTime = 46800000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==20){
+				//time is 2pm
+				startTime = 50400000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==21){
+				//time is 3pm
+				startTime = 54000000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==22){
+				//time is 4pm
+				startTime = 57600000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==23){
+				//time is 5pm
+				startTime = 61200000 + Number(time.toString().slice(14,16))* 6000
+			}
+
+			else if(Number(time.toString().slice(11,13))==24){
+				//time is 6pm
+				startTime = 64800000 + Number(time.toString().slice(14,16))* 6000
+			}
 
       if(!startMS && !endMS){return true}
 	    if ((startMS <= startTime) && (endMS >= startTime )) {return true}
@@ -150,7 +257,6 @@
       else{return false}
 			
 	  };
-
 		$scope.openGame = function(game) {
 			$scope.submitError = null;
 			$scope.requestMessage = {comments: ''};
