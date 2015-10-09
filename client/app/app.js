@@ -7,6 +7,7 @@
       'imgame.browseGames',
       'imgame.profile',
       'imgame.service',
+      'imgame.createReview',
       'ui.router',
       'ui.materialize',
   		'ngRoute',

@@ -2,6 +2,7 @@ var userController    = require('./controllers/userController.js'),
     gameController    = require('./controllers/gamePostsController.js'),
     requestController = require('./controllers/requestController.js'),
     notesController   = require('./controllers/notificationsController.js'),
+    reviewsController = require('./controllers/reviewsController.js')
     passport          = require('passport');
 
 var express = require('express');
@@ -118,6 +119,12 @@ router.get('/me/notifications',
 router.post('/me/notifications',
   checkAuth,
   notesController.updateNotifications
+);
+
+//create a review on a user
+router.post('/gameposts/:id/reviews',
+  checkAuth,
+  reviewsController.findOrCreateReview
 );
 
 module.exports = router;
