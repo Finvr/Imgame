@@ -2,7 +2,7 @@
 	angular.module('imgame.myGames', [])
 	  .controller('MyGamesController', MyGamesController);
 
-  function MyGamesController($scope, $window, $location, Auth, GamePost, Profile, Invitations){
+  function MyGamesController($scope, $window, $location, $route, Auth, GamePost, Profile, Invitations,Review){
 
     /* Modal functions */
     $scope.showHostedEventModal = function(date){
@@ -30,6 +30,71 @@
           callback(events);
         });
     };
+
+    $scope.getReviews = function() {
+      return Profile.getReviews()
+        .then(function(data){
+          return $scope.existingReviews = data;
+        })
+    };
+
+    $scope.getRecentGames = function(){
+        return $scope.getReviews()
+        .then(function(reviews){
+          return Profile.getRecentGames()
+        })
+        .then(function(games){
+          games.forEach(function(game){
+            game.user_id = game.user_id ? game.user_id : game.host_id;
+            $scope.existingReviews.forEach(function(review){
+              if (review.gameposts_id === game.gamepost_id && review.reviewer_id === game.user_id) {
+                game.reviewed = true;
+              }
+            })
+          })                     
+          $scope.recentGames = games;
+        })
+    };
+
+    $scope.openRateModal = function(game) {
+      console.log('game modal: ', game)
+      if (game.host_name) {
+        game.playerPics.unshift({picture: game.host_pic,
+          user_id: game.host_id,
+          username: game.host_name
+        });
+      }
+      game.playerPics.forEach(function(player){
+        player.skip = true;
+        player.showed_up
+        player.rating = 3;
+      })
+      $scope.currentRateGame = game;
+    };
+
+    $scope.sendReviews = function (players){
+      var gamepostId = $scope.currentRateGame.gamepost_id;
+      var reviews = [];
+      for (var i = 0; i < players.length; i++){
+        var player = {}
+        if (!players[i].skip) {
+          player.reviewee_id = players[i].user_id
+          player.gameposts_id = gamepostId;
+          player.rating = players[i].rating;
+          player.showed_up = players[i].showed_up;
+          reviews.push(player)
+        }
+      }
+      if (reviews.length > 0) {
+        Review.createReview(reviews)
+          .then(function(reviews){
+            $scope.currentRateGame.reviewed = true;
+            console.log("reviews from profile controller : ", reviews)                
+          });        
+      }
+    };
+
+
 
     var getMyProfile = function(){
       Profile.getProfile().then(function(profile){
@@ -92,6 +157,8 @@
       getMyRequests();
       getMyProfile();
       getMyInvitations();
+      $scope.getReviews();
+      $scope.getRecentGames();
       /* Scope variables */
       $scope.eventSources = [getMyGames];
       $scope.gameToShowDetails = null;

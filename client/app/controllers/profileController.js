@@ -15,7 +15,7 @@ angular.module('imgame.profile', [])
     };
 
     $scope.getRecentGames = function(){
-      Profile.getRecentGames()
+        Profile.getRecentGames()
         .then(function(games){
           games.forEach(function(game){
             game.user_id = game.user_id ? game.user_id : game.host_id;
@@ -51,6 +51,7 @@ angular.module('imgame.profile', [])
 
     $scope.openRateModal = function(game) {
       if (game.host_name) {
+        console.log('game.playerPics',game.playerPics)
         game.playerPics.unshift({picture: game.host_pic,
           user_id: game.host_id,
           username: game.host_name

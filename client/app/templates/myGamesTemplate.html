@@ -37,6 +37,31 @@
               </p>
             </div>
           </li>
+
+
+          <!-- begin review list -->
+          <li ng-repeat="game in recentGames track by $index | orderBy:'game_datetime'" class="collection-item avatar" ng-if="!game.reviewed">
+             <div class="collapsible-header">
+              <span class="title grey-text text-darkern-2">
+                {{ game.game | limitTo: 10 }} ... 
+              </span>
+              <span>
+                  {{ game.game_datetime | date : "M/d/yyyy @ h:mm a" }}
+              </span> 
+              <a href="#approve-pending" ng-click="openRateModal(game)" class="waves-effect waves-light secondary-content" modal><i class="material-icons">open_in_new</i></a> 
+             </div>
+             <div class="collapsible-body"><p>
+                <strong>Time:</strong> {{ game.game_datetime | date : "EEE, MMM d, y @ h:mm a" }}<br>
+                <strong>Location:</strong> {{ game.game_location }}<br>
+                <strong>Players:</strong> {{game.accepted_players + "/" + game.player_count}}
+                <br>
+                <strong>Description:</strong> {{game.gamepost_description ? game.gamepost_description : "N/A"}}<br>
+              </p></div>
+            </li>
+            <!-- end review list -->
+
+
+
           <li ng-repeat="invitation in myInvitations track by $index | orderBy:'game_datetime'" class="collection-item avatar"> 
             <div class="collapsible-header">
                 <span class="title grey-text text-darkern-2">
@@ -156,6 +181,73 @@
       </ul>
     </div>
   </div>
+
+    <!-- detail Modal for rating each game -->
+  <div id="openRateModal" class="modal">
+    <div class="modal-header grey">
+      <div ng-click="close('#openRateModal')"><i class="material-icons right close">close</i></div>
+      <span class="white-text"><h4>{{currentRateGame.game ? currentRateGame.game : "No Name"}}</h4></span>
+    </div>
+    <div class="modal-content">
+      <div>
+        <span class="grey-text">Host:</span> 
+        <a href="#/profile/{{currentRateGame.host_id}}" target="_blank"><img class="hostPic" ng-src="{{currentRateGame.picture || currentRateGame.host_pic}}">{{currentRateGame.host_name || currentRateGame.username}}</a>
+      </div>
+      <div>
+        <span class="grey-text">Location:</span> {{currentRateGame.game_location}}
+      </div>
+      <div class="row">
+        <table ng-if="currentRateGame.playerPics.length > 0">
+          <thead>
+            <tr>
+              <th class="players">Player</th>
+              <th>Skip</th>
+              <th>Showed up</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="player in currentRateGame.playerPics">
+              <td class="players">
+                <a href="#/profile/{{player.user_id}}" target="_blank" ><img class="hostPic" ng-src="{{player.picture}}">{{player.username}}</a>
+              </td>
+              <td ng-if="!currentRateGame.reviewed">
+                <div class="switch" >
+                  <label>
+                    <input type="checkbox" ng-model="player.skip" value="false">
+                    <span class="lever"></span>
+                  </label>
+                </div>
+                <span class="reviewResults" watch>{{player.skip ? "Don't Rate" : "Rate"}}</span>
+              </td>
+              <td ng-if="!player.skip">               
+                <div class="switch" ng-if="!player.skip">
+                  <label>
+                    <input type="checkbox" ng-model="player.showed_up">
+                    <span class="lever"></span>
+                  </label>
+                </div>
+                <span class="reviewResults"  watch>{{player.showed_up ? "Yes" : "No"}}</span>
+              </td>
+              <td ng-if="!player.skip && player.showed_up">
+                <input type="range" ng-model="player.rating" min="0" max="5" />
+                <span class="reviewResults"  watch>{{player.rating}}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer" ng-if="!currentRateGame.reviewed">
+        <div class = "col s4 right" ng-click="sendReviews(currentRateGame.playerPics)">
+          <a class = "btn btn-med waves-effect center waves-light grey darken-3" ng-click="close('#openRateModal')">
+            Complete Rating
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal complete -->
 
   <!-- Pop-up modal for requests of invitations -->
   <div id="approve-invitation" class="modal">

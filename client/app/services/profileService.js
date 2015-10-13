@@ -45,7 +45,7 @@
         url: '/me/gameposts/recentgames'
       })
       .then(function(resp){
-        console.log("getRecentGames from profile service: ", resp.data);
+        //console.log("getRecentGames from profile service: ", resp.data);
         return resp.data;
       })
       .catch(function(err){
@@ -59,7 +59,7 @@
         url: '/me/reviews'
       })
       .then(function(resp){
-        console.log("getReviews from profile service: ", resp.data);
+        //console.log("getReviews from profile service: ", resp.data);
         return resp.data;
       })
       .catch(function(err){
