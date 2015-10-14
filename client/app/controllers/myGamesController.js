@@ -21,6 +21,7 @@
         .then(function(games){
           $scope.myGames = games;
           var events = $scope.myGames.map(function(game) {
+            console.log("game: ", game)
             var newEvent = {};
             newEvent.title = game.game;
             newEvent.start = moment(game.game_datetime);
@@ -104,7 +105,7 @@
       });
     };
 
-    var getMyRequests = function(){
+    var getMyRequests = function(s,e,t,callback){
       return GamePost.myRequests()
         .then(function(requests){
           if (requests === 'request does not exist'){
@@ -112,6 +113,17 @@
           } else {
             $scope.myRequests = requests;
           }
+          var events = $scope.myRequests.filter(function(request){
+            return request.status === 'accepted'
+          }).map(function(request){
+            console.log('request: ', request)
+            var newEvent = {};
+            newEvent.title = request.game;
+            newEvent.start = moment(request.game_datetime);
+            newEvent.data = request;
+            return newEvent;
+          });
+          callback(events);
         });
     };
 
@@ -156,13 +168,13 @@
     $scope.init = function() {
       Auth.requireAuth();
       getMyGames(null,null,null,function(){}); //find less hacky solution
-      getMyRequests();
+      getMyRequests(null,null,null,function(){});
       getMyProfile();
       getMyInvitations();
       $scope.getReviews();
       $scope.getRecentGames();
       /* Scope variables */
-      $scope.eventSources = [getMyGames];
+      $scope.eventSources = [getMyGames, getMyRequests];
       $scope.gameToShowDetails = null;
       $scope.gameToCancel = null;
       $scope.gameToApprove = null;
