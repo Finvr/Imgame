@@ -104,7 +104,7 @@
       });
     };
 
-    var getMyRequests = function(){
+    var getMyRequests = function(s,e,t,callback){
       return GamePost.myRequests()
         .then(function(requests){
           if (requests === 'request does not exist'){
@@ -112,6 +112,15 @@
           } else {
             $scope.myRequests = requests;
           }
+          var events = $scope.myRequests.map(function(request){
+            console.log('request: ', request)
+            var newEvent = {};
+            newEvent.title = request.game;
+            newEvent.start = request.game_datetime;
+            newEvent.data = request;
+            return newEvent;
+          });
+          callback(events);
         });
     };
 
@@ -156,13 +165,13 @@
     $scope.init = function() {
       Auth.requireAuth();
       getMyGames(null,null,null,function(){}); //find less hacky solution
-      getMyRequests();
+      getMyRequests(null,null,null,function(){});
       getMyProfile();
       getMyInvitations();
       $scope.getReviews();
       $scope.getRecentGames();
       /* Scope variables */
-      $scope.eventSources = [getMyGames];
+      $scope.eventSources = [getMyGames, getMyRequests];
       $scope.gameToShowDetails = null;
       $scope.gameToCancel = null;
       $scope.gameToApprove = null;
